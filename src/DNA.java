@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * DNA
  * <p>
@@ -17,6 +19,41 @@ public class DNA {
      */
     public static int STRCount(String sequence, String STR) {
 
-        return 0;
+        ArrayList<Integer> sequences = new ArrayList<>();
+        int max = 0;
+        int strLength = STR.length();
+
+        for (int i = 0; i  < sequence.length(); i++) {
+
+            int j = 0;
+            while (j >= 0 && j < sequences.size()) {
+                if (STR.charAt(sequences.get(j) % strLength) == sequence.charAt(i)) {
+                    sequences.set(j, sequences.get(j) + 1);
+                }
+                else {
+                    int length = sequences.get(j) / strLength;
+                    if (length > max) {
+                        max = length;
+                    }
+                    sequences.remove(j);
+                    j--;
+                    if (j < 0) {
+                        break;
+                    }
+                }
+                j++;
+            }
+            if (sequence.charAt(i) == STR.charAt(0)) {
+                sequences.add(1);
+            }
+        }
+        if (!sequences.isEmpty()) {
+            for (Integer length : sequences) {
+                if (length / strLength > max) {
+                    max = length / strLength;
+                }
+            }
+        }
+        return max;
     }
 }
