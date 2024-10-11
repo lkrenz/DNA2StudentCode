@@ -24,7 +24,6 @@ public class DNA {
         int strLength = STR.length();
 
         for (int i = 0; i  < sequence.length(); i++) {
-
             int j = 0;
             while (j >= 0 && j < sequences.size()) {
                 if (STR.charAt(sequences.get(j) % strLength) == sequence.charAt(i)) {
