@@ -8,18 +8,19 @@ import java.util.ArrayList;
  * at Menlo School in Atherton, CA
  *</p>
  * <p>
- * Completed by: [YOUR NAME HERE]
+ * Completed by: Liam Krenz
  *</p>
  */
 
 public class DNA {
-
 
     public static int STRCount(String sequence, String STR) {
         ArrayList<Integer> sequences = new ArrayList<>();
         int max = 0;
         int strLength = STR.length();
         boolean continueSequence;
+        char[] strArray = STR.toCharArray();
+        char startChar = STR.charAt(0);
 
         for (int i = 0; i < sequence.length(); i++) {
             continueSequence = false;
@@ -27,7 +28,8 @@ public class DNA {
 
             for (int j = 0; j < sequences.size(); j++) {
                 int index = sequences.get(j);
-                if (STR.charAt(index % strLength) == currentChar) {
+                // In testLargest(), this statement is always true
+                if (strArray[index % strLength] == currentChar) {
                     sequences.set(j, index + 1);
                     if (index % strLength == 0) {
                         continueSequence = true;
@@ -38,14 +40,14 @@ public class DNA {
                     if (length > max) {
                         max = length;
                     }
-                    sequences.remove(j);
+                    sequences.remove(j); // I might want to move away from arraylists, this is linear time
                     j--;
-                    if (sequences.isEmpty() && j < 0) {
+                    if (sequences.isEmpty()) {
                         break;
                     }
                 }
             }
-            if (!continueSequence && currentChar == STR.charAt(0)) {
+            if (!continueSequence && currentChar == startChar) {
                 sequences.add(1);
             }
         }
