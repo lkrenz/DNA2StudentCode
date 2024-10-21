@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6d822f69-9e3c-4e2b-8ee1-11779bb646bd" name="Changes" comment="Added comments">
+    <list default="true" id="6d822f69-9e3c-4e2b-8ee1-11779bb646bd" name="Changes" comment="Started hash solution, need to add index out of bounds checks.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DNA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DNA.java" afterDir="false" />
     </list>
@@ -174,7 +174,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728966959156</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Started hash solution, need to add index out of bounds checks.">
+      <option name="closed" value="true" />
+      <created>1729034415853</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1729034415853</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -184,6 +192,7 @@
     <MESSAGE value="Everything works, but testLargest takes slightly too long. Also fixed bug in last commit." />
     <MESSAGE value="Everything works, but testLargest takes slightly too long." />
     <MESSAGE value="Added comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added comments" />
+    <MESSAGE value="Started hash solution, need to add index out of bounds checks." />
+    <option name="LAST_COMMIT_MESSAGE" value="Started hash solution, need to add index out of bounds checks." />
   </component>
 </project>

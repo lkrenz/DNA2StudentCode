@@ -78,32 +78,39 @@ public class DNA {
         int[] map = createArray();
         int max = 0;
         long radixPower = (long) Math.pow(radix, STR.length() - 1);
+        int strLength = STR.length();
 
-        for (int i = 0; i < sequenceLength; i++) {
+        for (int i = 0; i < sequenceLength - strLength; i++) {
             if (strHash == sequenceHash) {
                 int j = i;
                 int localMax = 0;
-                while (true) {
-                    if (hashFunction(sequence.substring(i, i + STR.length())) == strHash) {
-                        j += STR.length();
+                while (j < sequenceLength) {
+                    sequenceHash = hashFunction(sequence.substring(j, j + strLength));
+                    if (sequenceHash == strHash) {
+                        j += strLength;
                         localMax++;
                         continue;
                     }
                     break;
                 }
+                if (localMax > max) {
+                    max = localMax;
+                }
                 i = j;
             }
-            sequenceHash = ((sequenceHash + p) - (sequence.charAt(i) * radixPower) % p) % p;
-            sequenceHash = ((sequenceHash * radix) + sequence.charAt(i + STR.length())) % p;
+            if (i < sequenceLength) {
+                sequenceHash = ((sequenceHash + p) - ((sequence.charAt(i) * radixPower) % p)) % p;
+                sequenceHash = ((sequenceHash * radix) + sequence.charAt(i + strLength)) % p;
+            }
         }
-
+        return max;
     }
 
 
     public static long hashFunction(String str) {
         long hash = 0;
         for (int i = 0; i < str.length(); i++) {
-            hash = (hash * 256 + str.charAt(i)) % 2147483647;
+            hash = (hash * 116 + str.charAt(i)) % 2147483647;
         }
         return hash;
     }
