@@ -69,15 +69,49 @@ public class DNA {
 //            }
 //        }
 //        return max;
+//
+//        int sequenceLength = sequence.length();
+//        long strHash = hashFunction(STR);
+//        long sequenceHash = hashFunction(sequence.substring(0, STR.length()));
+//        int radix = 116;
+//        long p = 2147483647;
+//        int[] map = createArray();
+//        int max = 0;
+//        long radixPower = (long) Math.pow(radix, STR.length() - 1);
+//        int strLength = STR.length();
+//
+//        for (int i = 0; i < sequenceLength - strLength; i++) {
+//            if (strHash == sequenceHash) {
+//                int j = i;
+//                int localMax = 0;
+//                while (j < sequenceLength) {
+//                    sequenceHash = hashFunction(sequence.substring(j, j + strLength)2555tbb);
+//                    if (sequenceHash == strHash) {
+//                        j += strLength;
+//                        localMax++;
+//                        continue;
+//                    }
+//                    break;
+//                }
+//                if (localMax > max) {
+//                    max = localMax;
+//                }
+//                i = j;
+//            }
+//            if (i < sequenceLength) {
+//                sequenceHash = ((sequenceHash + p) - ((sequence.charAt(i) * radixPower) % p)) % p;
+//                sequenceHash = ((sequenceHash * radix) + sequence.charAt(i + strLength)) % p;
+//
+//            }
+//        }
+//        return max;
 
-        int sequenceLength = sequence.length();
-        long strHash = hashFunction(STR);
-        long sequenceHash = hashFunction(sequence.substring(0, STR.length()));
-        int radix = 116;
-        long p = 2147483647;
-        int[] map = createArray();
+
+        int[] hashArr = createArray();
+        long strHash = hashFunction(STR, hashArr);
+        long sequenceHash = hashFunction(sequence.substring(0, STR.length()), hashArr);
         int max = 0;
-        long radixPower = (long) Math.pow(radix, STR.length() - 1);
+        int sequenceLength = sequence.length();
         int strLength = STR.length();
 
         for (int i = 0; i < sequenceLength - strLength; i++) {
@@ -85,7 +119,7 @@ public class DNA {
                 int j = i;
                 int localMax = 0;
                 while (j < sequenceLength) {
-                    sequenceHash = hashFunction(sequence.substring(j, j + strLength));
+                    sequenceHash = hashFunction(sequence.substring(j, j + strLength), hashArr);
                     if (sequenceHash == strHash) {
                         j += strLength;
                         localMax++;
@@ -99,28 +133,31 @@ public class DNA {
                 i = j;
             }
             if (i < sequenceLength) {
-                sequenceHash = ((sequenceHash + p) - ((sequence.charAt(i) * radixPower) % p)) % p;
-                sequenceHash = ((sequenceHash * radix) + sequence.charAt(i + strLength)) % p;
+                sequenceHash = sequenceHash - (hashArr[sequence.charAt(i)] << (STR.length() * 2));
+                sequenceHash = (sequenceHash << 2) + hashArr[sequence.charAt(i + strLength)];
             }
         }
         return max;
     }
 
 
-    public static long hashFunction(String str) {
+
+
+
+    public static long hashFunction(String str, int[] hashArr) {
         long hash = 0;
         for (int i = 0; i < str.length(); i++) {
-            hash = (hash * 116 + str.charAt(i)) % 2147483647;
+            hash = (hash << 2) + hashArr[str.charAt(i)];
         }
         return hash;
     }
 
     public static int[] createArray() {
         int[] array = new int[117];
-        array['t'] = 4;
-        array['g'] = 3;
-        array['c'] = 2;
-        array['a'] = 1;
+        array['T'] = 3;
+        array['G'] = 2;
+        array['C'] = 1;
+        array['A'] = 0;
         return array;
     }
 }
