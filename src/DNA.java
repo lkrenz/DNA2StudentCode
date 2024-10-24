@@ -107,19 +107,31 @@ public class DNA {
 //        return max;
 
 
+        // Map to store integer values for A C G and T
         int[] hashArr = createArray();
+
+
         long strHash = hashFunction(STR, hashArr);
         long sequenceHash = hashFunction(sequence.substring(0, STR.length()), hashArr);
         int max = 0;
+
+        // Precalculated to save on efficiency
         int sequenceLength = sequence.length();
         int strLength = STR.length();
 
+        // Loops through the sequence
         for (int i = 0; i < sequenceLength - strLength; i++) {
+
+            // If hashes match, enters another loop to find length of sequence
             if (strHash == sequenceHash) {
                 int j = i;
                 int localMax = 0;
                 while (j < sequenceLength) {
+
+                    // Completely recalculating the hash for the next characters is as efficient as shifting over
                     sequenceHash = hashFunction(sequence.substring(j, j + strLength), hashArr);
+
+                    // If another match is found, we move forward the length of STR
                     if (sequenceHash == strHash) {
                         j += strLength;
                         localMax++;
@@ -130,10 +142,14 @@ public class DNA {
                 if (localMax > max) {
                     max = localMax;
                 }
+
+                // Go to the end of the last verified STR
                 i = j;
             }
+
+            // Update sequenceHash
             if (i < sequenceLength) {
-                sequenceHash = sequenceHash - (hashArr[sequence.charAt(i)] << (STR.length() * 2));
+                sequenceHash = sequenceHash - ((long)hashArr[sequence.charAt(i)] << ((strLength-1) * 2));
                 sequenceHash = (sequenceHash << 2) + hashArr[sequence.charAt(i + strLength)];
             }
         }
@@ -144,6 +160,8 @@ public class DNA {
 
 
 
+    // Hashes a given string using the values the characters map to
+    // We don't need a modulus statement as values will always be less than a long
     public static long hashFunction(String str, int[] hashArr) {
         long hash = 0;
         for (int i = 0; i < str.length(); i++) {
@@ -152,6 +170,7 @@ public class DNA {
         return hash;
     }
 
+    // Initializes a map for the letters in the DNA sequence
     public static int[] createArray() {
         int[] array = new int[117];
         array['T'] = 3;
